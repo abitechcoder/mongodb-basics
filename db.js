@@ -1,13 +1,22 @@
-var mongo = require('mongodb');
-const username = "abitechcoder";
-// Creating a MongoClient object
-var MongoClient = require('mongodb').MongoClient;
-// creating url with the correct ip address and the name of the database you want to create
-var url = `mongodb://localhost:27017/${username}`;
+const MongoClient = require('mongodb').MongoClient;
+const assert = require('assert');
+const interns = require('./interns');
+const findInterns = require('./findInterns');
+const updateInterns = require('./updateInterns');
 
-// creating the database and connecting to it
-MongoClient.connect(url, function(err, db){
-    if (err) throw err;
-    console.log(`Database created! by ${username}`);
-    db.close();
+//Connection URL
+const url = 'mongodb://localhost:27017';
+//Database Name
+const dbName = 'abitechcoder';
+//Create a new MongoClient
+const client = new MongoClient(url, {useUnifiedTopology: true, useNewUrlParser: true});
+
+// Use connect method to connect to the Server
+client.connect(function(err){
+    assert.equal(null, err);
+    console.log('Connected Successfully to the Server');
+    const db = client.db(dbName);
+    interns(db, function(){
+        client.close();
+    })
 });

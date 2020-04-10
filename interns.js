@@ -1,12 +1,43 @@
-var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://localhost:27017/startng_internship";
+const assert = require('assert');
 
-MongoClient.connect(url, function(err, db) {
-  if (err) throw err;
-  var dbObject = db.db("startng_internship");
-  dbObject.createCollection("interns", function(err, res) {
-    if (err) throw err;
-    console.log("Interns collection created!");
-    db.close();
-  });
-});
+const interns = function(db, callback){
+  //Get the documents collection
+  const collection = db.collection('myMovies');
+  //Insert some documents
+  collection.insertMany(
+    [
+      {
+        movie: "The Banker",
+        year: 2020, 
+        rating: 8
+      },
+      {
+        movie: "Bad Boys",
+        year: 2020, 
+        rating: 7
+      },
+      {
+        movie: "The Hunt",
+        year: 2020, 
+        rating: 7
+      },
+      {
+        movie: "Bloodshot",
+        year: 2020, 
+        rating: 7.5
+      },
+      {
+        movie: "First Cow",
+        year: 2020, 
+        rating: 6.5
+      },
+    ], function(err, results){
+        assert.equal(err, null);
+        assert.equal(results.insertedCount, results.result.n)
+        console.log(results.ops)
+        callback(results);
+      }
+  );
+};
+
+module.exports = interns;
