@@ -16,7 +16,13 @@ client.connect(function(err){
     assert.equal(null, err);
     console.log('Connected Successfully to the Server');
     const db = client.db(dbName);
+    if (db.collection('myMovies')){
+        // Drop the collection myMovies to avoid duplicate entries 
+        db.collection('myMovies').drop();
+    }
     interns(db, function(){
-        client.close();
-    })
+        findInterns(db, function(){
+            client.close()
+        });
+    });
 });
