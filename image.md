@@ -4,7 +4,7 @@ Simple MongoDB CRUD Operations
 
 ### 1. The screenshot showing the result of the Inserted movies 
  
-![](images/insertMovies.PNG)
+![](images/InsertMovies.PNG)
 
 
 ### 2. The screenshot showing the result of methods used to query the collection.
