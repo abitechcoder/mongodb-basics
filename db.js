@@ -22,7 +22,9 @@ client.connect(function(err){
     }
     interns(db, function(){
         findInterns(db, function(){
-            client.close()
+            updateInterns(db, function(){
+                client.close();
+            });
         });
     });
 });
